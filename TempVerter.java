@@ -103,8 +103,8 @@ public class TempVerter extends JFrame {
         cardPanel.setBorder(BorderFactory.createLineBorder(lightBorder, 1));
 
         String[][] meta = {
-                {"°C", "Celsius", "Water freezes at 0 °C"},
-                {"°F", "Fahrenheit", "Body temp is 98.6 °F"},
+                {"\u00B0C", "Celsius", "Water freezes at 0 °C"},
+                {"\u00B0F", "Fahrenheit", "Body temp is 98.6 °F"},
                 {"K", "Kelvin", "Absolute zero is 0 K"}
         };
 
@@ -415,7 +415,11 @@ public class TempVerter extends JFrame {
 
     private void applyToChildren(Container container, Color text) {
         for (Component child : container.getComponents()) {
-            if (child instanceof JLabel label) {
+            if (child instanceof JLabel) {
+                JLabel label = (JLabel) child;
+                label.setForeground(Color.WHITE);
+                
+                
                 if ("badgeLabel".equals(label.getName())) {
                     label.setForeground(Color.BLACK);
                 } else if (label != copyFeedbackLabel && !isHintLabel(label)) {
@@ -423,7 +427,10 @@ public class TempVerter extends JFrame {
                 }
             }
 
-            if (child instanceof JButton button) {
+            if (child instanceof JButton) {
+                 
+                JButton button = (JButton) child;
+                
                 if ("Clear All".equals(button.getText())) {
                     button.setForeground(Color.BLACK);
                 } else {
@@ -431,7 +438,8 @@ public class TempVerter extends JFrame {
                 }
             }
 
-            if (child instanceof Container nested && !(child instanceof JTextField)) {
+            if (child instanceof Container && !(child instanceof JTextField)) {
+                Container nested = (Container) child;
                 applyToChildren(nested, text);
             }
         }
